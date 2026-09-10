@@ -8,7 +8,7 @@ export const Route = createRootRoute({
     links: [
       {
         rel: 'icon',
-        href: '/readyrig-mark.svg',
+        href: '/readyrig-prototype/readyrig-mark.svg',
         type: 'image/svg+xml',
       },
     ],
