@@ -15,6 +15,7 @@ const config = defineConfig({
       spa: {
         enabled: true,
         prerender: {
+          outputPath: 'index.html',
           crawlLinks: true,
         },
       },
