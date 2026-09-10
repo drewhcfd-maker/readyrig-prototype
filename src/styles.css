@@ -559,3 +559,48 @@ main { min-height:calc(100vh - 76px); }
   .ops-stats { gap:9px; }.stat-card { min-height:120px; padding:15px; }.stat-card > strong { font-size:31px; }
   .mobile-nav .nav-item { font-size:8px; }
 }
+
+/* Dark theme readability pass */
+.context-bar { background:#0f181f; color:#dce6ea; border-color:#2a3943; }
+.stepper { background:#16222a; border-color:#2c3c46; box-shadow:0 8px 24px rgba(0,0,0,.2); }
+.stepper button { color:#9eb0ba; }
+.stepper button.active { color:#f4f7f9; background:#22313b; }
+.stepper button span { border-color:#42525c; background:#111b22; color:#a9bac3; }
+.stepper button.active span { color:#fff; }
+.next-panel { background:#16222a !important; border-color:#30414b !important; color:#edf3f5; box-shadow:0 12px 30px rgba(0,0,0,.22); }
+.next-panel > span { color:#91a5af; }
+.next-panel > strong { color:#f3f7f8; }
+.next-panel > p,.next-panel small { color:#a1b0b8; }
+.next-panel b { color:#e9f0f3; }
+.next-panel hr { border-color:#30414b; }
+
+.cad-import-card { background:#17242c !important; border-color:#334650 !important; box-shadow:0 12px 30px rgba(0,0,0,.2); }
+.cad-import-heading { background:#1d2b34 !important; border-color:#334650 !important; }
+.cad-import-heading > div > span { color:#9fb0b8 !important; }
+.cad-import-heading h2 { color:#f0f5f7 !important; }
+.cad-import-heading h2 svg { color:#69aabd !important; }
+.cad-import-heading em { background:#263640 !important; border-color:#49606b !important; color:#d6e1e5 !important; }
+.cad-readonly-grid { background:#334650 !important; }
+.readonly-field { background:#142028 !important; }
+.readonly-field span { color:#91a4ae !important; }
+.readonly-field strong { color:#f0f5f7 !important; }
+.cad-note { background:#1b3039 !important; color:#b7c8cf !important; }
+.cad-note svg { color:#69aabd !important; }
+
+.mutual-aid-block { background:#17242c !important; border-color:#334650 !important; }
+.mutual-aid-block > p { color:#9eb0b9 !important; }
+.other-inline { background:#172f38 !important; border-color:#31535f !important; }
+.other-inline label > span { color:#b5cbd3 !important; }
+.other-inline input { background:#0d171e !important; color:#eef4f6 !important; border-color:#3b515c !important; }
+
+.field input,.field select,.field textarea,.detail-field input,.review-controls textarea,.assignments select,.unit-fields input,.unit-fields select { color-scheme:dark; }
+.choice-grid button,.unit-selector button,.personnel-grid button { color:#c2d0d6; }
+.choice-grid button.selected,.unit-selector button.selected { color:#eef7fa; }
+.summary-section > header,.unit-card summary { color:#edf3f5; }
+.summary-section > header button { color:#78b5c6; }
+.summary-grid dt { color:#8ea1ab; }
+.summary-grid dd,.narrative-review { color:#e0e9ed; }
+
+@media (max-width:760px) {
+  .stepper { overflow-x:auto; grid-template-columns:repeat(5,minmax(130px,1fr)); }
+}
