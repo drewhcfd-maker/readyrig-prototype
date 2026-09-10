@@ -358,3 +358,60 @@ h1, h2, h3, p { margin-top: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Prototype workflow additions */
+.cad-import-card { margin-bottom: 22px; border: 1px solid #cfd5d4; border-radius: 10px; background: #f7f8f6; overflow: hidden; }
+.cad-import-heading { padding: 16px 18px; display: flex; justify-content: space-between; align-items: center; gap: 14px; background: #e9eeec; border-bottom: 1px solid #d6dcda; }
+.cad-import-heading > div > span { display: block; margin-bottom: 4px; color: #657477; font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: .12em; }
+.cad-import-heading h2 { display: flex; align-items: center; gap: 7px; margin: 0; font-size: 16px; }
+.cad-import-heading h2 svg { color: var(--blue); }
+.cad-import-heading em { padding: 6px 9px; border: 1px solid #c5cecb; border-radius: 999px; color: #5c6a6c; background: #fff; font-size: 9px; font-style: normal; font-weight: 800; white-space: nowrap; }
+.cad-readonly-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #dfe3df; }
+.readonly-field { min-height: 69px; padding: 12px 14px; background: #fff; }
+.readonly-field.wide { grid-column: span 2; }
+.readonly-field span { display: block; margin-bottom: 5px; color: #7a8688; font-size: 9px; font-weight: 850; text-transform: uppercase; letter-spacing: .08em; }
+.readonly-field strong { display: block; font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+.cad-note { display: flex; align-items: center; gap: 7px; margin: 0; padding: 11px 15px; color: #52696e; background: #eef3f2; font-size: 10px; }
+.cad-note svg { flex: 0 0 auto; color: var(--blue); }
+.mutual-aid-block { grid-column: 1 / -1; padding: 14px; border: 1px solid #d7d5ce; border-radius: 8px; background: #f7f6f1; }
+.mutual-aid-block > p { margin: 0 0 11px; color: #687679; font-size: 11px; }
+.choice-grid-wrap { display: grid; gap: 9px; }
+.other-inline { padding: 10px 12px; border-left: 3px solid var(--blue); background: #eef3f4; border-radius: 0 7px 7px 0; animation: otherDrop .16s ease-out; }
+@keyframes otherDrop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.other-inline label { display: grid; gap: 6px; }
+.other-inline label > span { color: #45616a; font-size: 10px; font-weight: 850; text-transform: uppercase; letter-spacing: .08em; }
+.other-inline input { width: 100%; min-height: 42px; padding: 9px 11px; border: 1px solid #bfc9c9; border-radius: 6px; background: #fff; outline: 0; }
+.other-inline input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(47,103,120,.1); }
+.vehicle-description-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 900px; }
+.vehicle-description-grid .field:last-child { grid-column: span 2; }
+.unit-personnel-block { grid-column: 1 / -1; padding-top: 5px; }
+.unit-personnel-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.unit-personnel-heading strong { font-size: 12px; }
+.unit-personnel-heading span { color: var(--blue); font-size: 10px; font-weight: 850; }
+.compact-grid { grid-template-columns: repeat(3, 1fr); }
+.compact-grid button { min-height: 57px; }
+.compact-grid button.disabled-choice { opacity: .45; cursor: not-allowed; background: #f1f1ee; }
+.compact-grid button.disabled-choice .avatar { background: #e4e3dd; }
+.personnel-count-callout { display: flex; align-items: center; gap: 8px; margin-top: 15px; padding: 11px 13px; border-radius: 7px; background: #e5eee9; color: #315e49; font-size: 11px; }
+.personnel-count-callout svg { color: var(--green); }
+.status-dot { width: 8px; height: 8px; display: inline-block; border-radius: 50%; background: #d48a37; box-shadow: 0 0 0 3px rgba(212,138,55,.12); }
+
+@media (max-width: 1050px) {
+  .cad-readonly-grid { grid-template-columns: repeat(2, 1fr); }
+  .compact-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .cad-import-heading { align-items: flex-start; flex-direction: column; }
+  .cad-import-heading em { align-self: flex-start; }
+  .cad-readonly-grid { grid-template-columns: 1fr; }
+  .readonly-field.wide { grid-column: auto; }
+  .vehicle-description-grid { grid-template-columns: 1fr; }
+  .vehicle-description-grid .field:last-child { grid-column: auto; }
+  .compact-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 440px) {
+  .compact-grid { grid-template-columns: 1fr; }
+  .mutual-aid-block { padding: 11px; }
+}
