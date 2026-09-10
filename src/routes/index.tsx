@@ -229,11 +229,31 @@ function ReadyRigApp() {
       <header className="topbar">
         <button className="brand" onClick={() => setScreen('dashboard')} aria-label="ReadyRig dashboard">
           <span className="brand-mark"><Flame size={19} /></span>
-          <span><strong>ReadyRig</strong><small>Incident Reporting</small></span>
+          <span><strong>Ready<span>Rig</span></strong><small>PREPARE · RESPOND · TOGETHER</small></span>
         </button>
         <div className="department-name">Hickory Creek &amp; Pleasure Heights Fire Department</div>
-        <div className="prototype-badge"><Radio size={13} /> Prototype / Test Mode</div>
+        <div className="topbar-user"><span className="notification-dot"><Radio size={15} /></span><span className="user-avatar">DF</span><span className="user-name">Drew Foster</span><ChevronDown size={16} /></div>
       </header>
+
+      <nav className="app-nav" aria-label="Primary navigation">
+        <NavItem icon={<LayoutDashboard />} label="Home" active={screen === 'dashboard'} onClick={() => setScreen('dashboard')} />
+        <NavItem icon={<ClipboardCheck />} label="My Reports" active={screen === 'report'} onClick={() => setScreen('report')} />
+        <NavItem icon={<Truck />} label="Apparatus" onClick={() => setScreen('report')} />
+        <NavItem icon={<FilePenLine />} label="Maintenance" onClick={() => setScreen('report')} />
+        <NavItem icon={<BadgeCheck />} label="Training" onClick={() => setScreen('final')} />
+        <NavItem icon={<UsersRound />} label="Personnel" onClick={() => setScreen('officer')} />
+        <NavItem icon={<Radio />} label="Incidents" active={screen === 'officer' || screen === 'final'} onClick={() => setScreen('officer')} />
+        <div className="nav-spacer" />
+        <div className="nav-department">HICKORY CREEK &amp;<br />PLEASURE HEIGHTS FD<span>Neighbors Helping Neighbors</span></div>
+      </nav>
+
+      <nav className="mobile-nav" aria-label="Mobile navigation">
+        <NavItem icon={<LayoutDashboard />} label="Home" active={screen === 'dashboard'} onClick={() => setScreen('dashboard')} />
+        <NavItem icon={<ClipboardCheck />} label="Reports" active={screen === 'report'} onClick={() => setScreen('report')} />
+        <NavItem icon={<BadgeCheck />} label="Training" onClick={() => setScreen('final')} />
+        <NavItem icon={<FilePenLine />} label="Maint." onClick={() => setScreen('report')} />
+        <NavItem icon={<ChevronDown />} label="More" onClick={() => setScreen('officer')} />
+      </nav>
 
       {screen !== 'dashboard' && <div className="context-bar">
         <button className="text-button" onClick={() => setScreen('dashboard')}><ArrowLeft size={18} /> Dashboard</button>
@@ -251,6 +271,10 @@ function ReadyRigApp() {
   )
 }
 
+function NavItem({ icon, label, active = false, onClick }: { icon: React.ReactNode; label: string; active?: boolean; onClick: () => void }) {
+  return <button className={`nav-item${active ? ' active' : ''}`} onClick={onClick}>{icon}<span>{label}</span></button>
+}
+
 function Dashboard({ status, report, onOpen, onNew, onOfficer, onFinal }: { status: IncidentStatus; report: Report; onOpen: () => void; onNew: () => void; onOfficer: () => void; onFinal: () => void }) {
   const reportAction = status === 'Awaiting Officer Review' ? onOfficer : status === 'Approved' ? onFinal : onOpen
   return <div className="dashboard page-frame">
@@ -260,12 +284,23 @@ function Dashboard({ status, report, onOpen, onNew, onOfficer, onFinal }: { stat
       <div className="cad-content"><div className="incident-number">TEST-26-00124</div><div><h2>Structure Fire</h2><p><MapPin size={17} /> 123 Main Street, Testville</p></div><div className="cad-time"><Clock3 size={18} /><strong>18:32</strong><small>Dispatch</small></div><button className="light-button" onClick={onOpen}>{status === 'Awaiting Firefighter' ? 'Create Report' : 'Open Report'} <ArrowRight size={18} /></button></div>
       <div className="integration-strip"><span>CentralSquare CAD</span><ArrowRight size={14} /><strong>ReadyRig RMS</strong><ArrowRight size={14} /><span>NERIS</span><em>Simulated workflow</em></div>
     </section>
+    <section className="ops-stats">
+      <StatCard icon={<Truck />} label="Total" value="0" note="Scheduled" />
+      <StatCard icon={<CheckCircle2 />} label="Complete" value="0" note="On Track" tone="green" />
+      <StatCard icon={<Clock3 />} label="Pending" value={status === 'Awaiting Firefighter' ? '1' : '0'} note="Need Attention" tone="amber" />
+      <StatCard icon={<AlertTriangle />} label="Overdue" value="0" note="Past Due" tone="red" />
+    </section>
+    <section className="section-heading compact-dashboard-heading"><div><p className="eyebrow">Operations</p><h2>Recent Activity</h2></div><button className="text-button" onClick={onOpen}>View All <ArrowRight size={16} /></button></section>
     <section className="queue-grid">
       <QueueCard icon={<FilePenLine />} label="Needing Completion" count={status === 'Awaiting Firefighter' || status === 'Returned for Correction' ? 1 : 0} accent="amber">{(status === 'Awaiting Firefighter' || status === 'Returned for Correction') ? <IncidentRow incident={{ number: report.incidentNumber, type: report.incidentType || 'New Incident', address: report.address || 'No address', time: report.dispatchTime || '—', status }} onClick={reportAction} /> : <EmptyQueue text="No reports need completion" />}</QueueCard>
       <QueueCard icon={<UserRoundCheck />} label="Officer Review" count={(status === 'Awaiting Officer Review' ? 1 : 0) + 1} accent="blue">{status === 'Awaiting Officer Review' && <IncidentRow incident={{ number: report.incidentNumber, type: report.incidentType, address: report.address, time: report.dispatchTime, status }} onClick={onOfficer} />}<IncidentRow incident={mockIncidents[0]} onClick={onOfficer} /></QueueCard>
       <QueueCard icon={<BadgeCheck />} label="Recently Approved" count={(status === 'Approved' ? 1 : 0) + 2} accent="green">{status === 'Approved' && <IncidentRow incident={{ number: report.incidentNumber, type: report.incidentType, address: report.address, time: report.dispatchTime, status }} onClick={onFinal} />}{mockIncidents.slice(1).map((incident) => <IncidentRow key={incident.number} incident={incident} onClick={onFinal} />)}</QueueCard>
     </section>
   </div>
+}
+
+function StatCard({ icon, label, value, note, tone = '' }: { icon: React.ReactNode; label: string; value: string; note: string; tone?: string }) {
+  return <article className={`stat-card ${tone}`}><div className="stat-label">{icon}<span>{label}</span></div><strong>{value}</strong><small>{note}</small></article>
 }
 
 function QueueCard({ icon, label, count, accent, children }: { icon: React.ReactNode; label: string; count: number; accent: string; children: React.ReactNode }) {
